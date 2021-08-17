@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {  useMemo, useState } from "react";
 import './styles/styles.css'
 import PostList from "./components/postLIst";
 import PostForm from "./components/PostForm";
@@ -13,7 +13,21 @@ function App() {
       {id:3, title:'Java', body: '1'},
       {id:4, title:'2Go', body: '2'},
     ])
+    ///////////////////////////////////////////////////////
     const [selectedSort, setSlectedSort] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
+
+    const sortedPost = useMemo(()=>{ 
+      console.log('get done')
+    if(selectedSort){
+     return [...posts].sort((a,b)=>a[selectedSort].localeCompare(b[selectedSort]))
+    }
+    return posts
+     }, [selectedSort, posts])
+    
+     const sortedAndSearcgedPost = useMemo(()=>{
+       return sortedPost.filter(post => post.title.toLowerCase().includes(searchQuery))
+     },[searchQuery, sortedPost  ])
 
     const createPost = (newPost) => {
       setPosts([...posts, newPost])
@@ -25,11 +39,10 @@ function App() {
     
     const sortPost = (sort) =>{
          setSlectedSort(sort)
-         setPosts([...posts].sort((a,b)=>a[sort].localeCompare(b[sort])))
          console.log(sort)
     }
   
-  
+  ////////////////////////////////////////////////////////////////////////////////////////////
    return (
      <div className="App">
       
@@ -39,7 +52,11 @@ function App() {
       
         <div>
            
-           <MyInput />
+           <MyInput 
+         
+          value={searchQuery}
+          onChange={e=>setSearchQuery(e.target.value)}
+          placeholder='Serarch for....' />
 
           <MySelect 
             value={selectedSort}
@@ -53,10 +70,10 @@ function App() {
         
         </div>
      
-       {  posts.length!==0
-            ?<PostList remove={removePost} posts={posts} title='Post List'/>
+       {  sortedAndSearcgedPost.length
+            ?<PostList remove={removePost} posts={sortedAndSearcgedPost} title='Post List'/>
           
-            :<div style={{textAlign:'center'}}>No posts</div>
+            :<h1 style={{textAlign:'center'}}>No posts</h1>
        }
     
      
