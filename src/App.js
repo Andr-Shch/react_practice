@@ -1,4 +1,4 @@
-import React, {  useMemo, useState } from "react";
+import React, {   useEffect, useState } from "react";
 import './styles/styles.css'
 import PostList from "./components/postLIst";
 import PostForm from "./components/PostForm";
@@ -6,30 +6,27 @@ import PostForm from "./components/PostForm";
 import PostFilter from "./components/postFilter";
 import MyModal from "./UI/myNodal/myModal";
 import MyButton from "./UI/myButton/myButton";
+import { usePost } from "./hooks/usePost";
+import axios from "axios";
 
 
 function App() {
-    const [posts, setPosts] = useState([
-      {id:1, title:'JavaScript', body: 'Javascript is programming language'},
-      {id:2, title:'Python', body: 'Python is an interpreted high-level general-purpose programming language.'},
-      {id:3, title:'Java', body: '1'},
-      {id:4, title:'2Go', body: '2'},
-    ])
+    const [posts, setPosts] = useState([  ])
     ///////////////////////////////////////////////////////
     const [filter, setFilter] = useState({sort:'', query:''})
     const [modal, setModal]=useState(false)
-
-    const sortedPost = useMemo(()=>{ 
-      console.log('get done')
-    if(filter.sort){
-     return [...posts].sort((a,b)=>a[filter.sort].localeCompare(b[filter.sort]))
-    }
-    return posts
-     }, [filter.sort, posts])
+     
+    const sortedAndSearcgedPost = usePost(posts, filter.sort, filter.query)
     
-     const sortedAndSearcgedPost = useMemo(()=>{
-       return sortedPost.filter(post => post.title.toLowerCase().includes(filter.query))
-     },[filter.query, sortedPost  ])
+    async function fetchPosts(){
+      const respons = await axios.get('https://jsonplaceholder.typicode.com/posts');
+      setPosts(respons.data)
+    }
+    
+    useEffect(()=>{
+      fetchPosts()
+    }, [] )
+
 
     const createPost = (newPost) => {
       setPosts([...posts, newPost])
@@ -45,6 +42,7 @@ function App() {
   //////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
    return (
      <div className="App">
+           
          <MyButton onClick={()=> { setModal(true)}}>
               Create post
          </MyButton>
