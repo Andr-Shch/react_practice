@@ -8,6 +8,8 @@ import MyModal from "./UI/myNodal/myModal";
 import MyButton from "./UI/myButton/myButton";
 import { usePost } from "./hooks/usePost";
 import axios from "axios";
+import PostService from "./API/postService";
+import Loader from "./UI/Loader/Loader";
 
 
 function App() {
@@ -15,12 +17,15 @@ function App() {
     ///////////////////////////////////////////////////////
     const [filter, setFilter] = useState({sort:'', query:''})
     const [modal, setModal]=useState(false)
-     
+    const [isPostLanding, setIsPostLanding] = useState(false) 
+
     const sortedAndSearcgedPost = usePost(posts, filter.sort, filter.query)
     
     async function fetchPosts(){
-      const respons = await axios.get('https://jsonplaceholder.typicode.com/posts');
-      setPosts(respons.data)
+      setIsPostLanding(true)
+      const posts = await PostService.getAll()
+      setPosts(posts)
+      setIsPostLanding(false)
     }
     
     useEffect(()=>{
@@ -55,7 +60,12 @@ function App() {
             
        <PostFilter filter={filter} setFilter={setFilter} />
      
-       <PostList remove={removePost} posts={sortedAndSearcgedPost} title='Post List'/>
+        
+        {isPostLanding
+          ? <Loader/>
+          : <PostList remove={removePost} posts={sortedAndSearcgedPost} title='Post List'/>
+        }
+      
 
     </div>
   )
