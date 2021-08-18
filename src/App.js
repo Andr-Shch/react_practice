@@ -4,6 +4,8 @@ import PostList from "./components/postLIst";
 import PostForm from "./components/PostForm";
 
 import PostFilter from "./components/postFilter";
+import MyModal from "./UI/myNodal/myModal";
+import MyButton from "./UI/myButton/myButton";
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
     ])
     ///////////////////////////////////////////////////////
     const [filter, setFilter] = useState({sort:'', query:''})
+    const [modal, setModal]=useState(false)
+
     const sortedPost = useMemo(()=>{ 
       console.log('get done')
     if(filter.sort){
@@ -29,6 +33,7 @@ function App() {
 
     const createPost = (newPost) => {
       setPosts([...posts, newPost])
+      setModal(false)
     }
 
     const removePost= (post) => {
@@ -40,8 +45,15 @@ function App() {
   //////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
    return (
      <div className="App">
-      
-       <PostForm create={createPost}/>
+         <MyButton onClick={()=> { setModal(true)}}>
+              Create post
+         </MyButton>
+
+       <MyModal visible={modal} setVisible={setModal}>
+          <PostForm create={createPost}/>
+       </MyModal>
+       
+       
             
        <PostFilter filter={filter} setFilter={setFilter} />
      
