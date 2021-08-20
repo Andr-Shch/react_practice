@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import About from '../pages/about';
-import Post from '../pages/Pages';
-import PostIdPage from '../pages/PostIdPage';
-import { privateRoute, publicRoute, route } from '../router/rout';
+import { AuthContext } from '../context/conIndex';
+
+import { privateRoute, publicRoute} from '../router/rout';
 import Navbar from './navbar/Navbar';
 
 const AppRouter = () => {
-  const isAuth = false;
-
+    const{isAuth} = useContext(AuthContext)
+    console.log(isAuth);
     return (
         isAuth
         ? <div className="App">
@@ -18,13 +17,15 @@ const AppRouter = () => {
               <Route 
                   component={route.component} 
                   path={route.path} 
-                  exact={route.exect} />
-
+                  exact={route.exect}
+                  key={route.path}
+                  />
+                  
           )}
           
        
           
-          <Redirect to='/about'/>
+          <Redirect to='/posts'/>
         </Switch>
         </div>
        
@@ -37,7 +38,9 @@ const AppRouter = () => {
               <Route 
                   component={route.component} 
                   path={route.path} 
-                  exact={route.exect} />
+                  exact={route.exect} 
+                  key={route.path}
+                  />
 
           )}
           
