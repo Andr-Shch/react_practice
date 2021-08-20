@@ -22,7 +22,13 @@
       background-color: crimson;
       font-weight: 500;
       font-size: large;
+      color: rgb(236, 145, 163);
   }
+   .open button{
+    
+    background-color: teal;
+    color: rgb(174, 228, 203);
+}
 
   .post-enter {
     transform: translateX(-350px);
@@ -41,4 +47,22 @@
   .curent_page{
     background: teal;
   }
-  
+  .navbar{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 15px;
+    background: rgba(224, 224, 221, 0.678);
+  }
+  .nav_link{
+    margin: 0 15px;
+    
+  }
+  a{
+    text-decoration: none;
+    font-weight: 500;
+    color: teal;
+    font-size: 17px;
+  }
