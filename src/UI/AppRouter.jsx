@@ -3,25 +3,49 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import About from '../pages/about';
 import Post from '../pages/Pages';
 import PostIdPage from '../pages/PostIdPage';
+import { privateRoute, publicRoute, route } from '../router/rout';
 import Navbar from './navbar/Navbar';
 
 const AppRouter = () => {
+  const isAuth = false;
+
     return (
-        <div className="App">
+        isAuth
+        ? <div className="App">
         <Navbar />
         <Switch>
-          <Route  path='/about'>
-            <About />
-          </Route>
-          <Route exact path='/posts'>
-            <Post />
-          </Route>
-          <Route exact path='/posts/:id'>
-            <PostIdPage/>
-          </Route>
+          {privateRoute.map(route=>
+              <Route 
+                  component={route.component} 
+                  path={route.path} 
+                  exact={route.exect} />
+
+          )}
+          
+       
+          
           <Redirect to='/about'/>
         </Switch>
         </div>
+       
+       :<div className="App">
+        <Navbar />
+        <Switch>
+         
+          
+            {  publicRoute.map(route=>
+              <Route 
+                  component={route.component} 
+                  path={route.path} 
+                  exact={route.exect} />
+
+          )}
+          
+          <Redirect to='/login'/>
+        </Switch>
+        </div>
+        
+       
     );
 };
 
