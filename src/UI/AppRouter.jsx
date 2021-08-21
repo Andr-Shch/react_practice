@@ -3,11 +3,17 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { AuthContext } from '../context/conIndex';
 
 import { privateRoute, publicRoute} from '../router/rout';
+import Loader from './Loader/Loader';
 import Navbar from './navbar/Navbar';
 
 const AppRouter = () => {
-    const{isAuth} = useContext(AuthContext)
+    const{isAuth, loading} = useContext(AuthContext)
     console.log(isAuth);
+
+  if(loading){
+    return <Loader/>
+  }
+
     return (
         isAuth
         ? <div className="App">

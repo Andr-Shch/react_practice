@@ -76,14 +76,15 @@ function Post() {
 
             {postError && <h1>Errorrrr.......</h1>}
             {isPostLanding
-                ? <Loader />
-                : <PostList remove={removePost} posts={sortedAndSearcgedPost} title='Post List' />
-            }
+                     ?<Loader />
+                     : <PostList remove={removePost} posts={sortedAndSearcgedPost} title='Post List' />
+                
+           } 
 
-            <Pagination
-                page={page}
-                changePage={changePage}
-                totalPages={totalPages} />
+                <Pagination
+                   page={page}
+                  changePage={changePage}
+                  totalPages={totalPages} />
         </div>
     )
 }

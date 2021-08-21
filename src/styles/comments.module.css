@@ -1,0 +1,21 @@
+.comment_box{
+    margin-top: 30px;
+    margin-left: 20px;
+    box-shadow: 1px 1px 1px rgb(0 0 0 / 15%);
+    background: rgba(224, 224, 221, 0.678);;
+}
+
+.autor{
+ padding: 5px;
+ border-bottom: 1px solid rgba(0, 0, 0, 0.459);
+}
+
+.content{
+    padding: 5px;
+}
+.spn{
+    background: rgba(0, 128, 128, 0.445);
+    border-radius: 5px;
+    padding: 1px;
+    color: white;
+}
