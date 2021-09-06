@@ -15,7 +15,9 @@ const Pagination = ({totalPages, page, changePage}) => {
                     className={page=== p?`${stl.button} ${stl.curent}`:`${stl.button}`}>
                    {p}
                   </button>
+                 
         })}
+       
         </div>
     );
 };
